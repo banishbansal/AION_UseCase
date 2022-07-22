@@ -23,5 +23,20 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build ./AION_8/modelmonitoring -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelmonitoring:AION_8
+        docker build ./AION_8/ModelMonitoring -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelmonitoring:AION_8
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelmonitoring:AION_8
+        docker build ./AION_8/DataIngestion -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/dataingestion:AION_8
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/dataingestion:AION_8		
+        docker build ./AION_8/DataTransformation -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/datatransformation:AION_8
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/datatransformation:AION_8
+        docker build ./AION_8/FeatureEngineering -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/featureengineering:AION_8
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/featureengineering:AION_8
+        docker build ./AION_8/ModelRegistry -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelregistry:AION_8
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelregistry:AION_8		
+        docker build ./AION_8/ModelServing -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelserving:AION_8
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelserving:AION_8		
+
+docker build ./AION_8/ModelTraining_KNeighborsClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_8
+docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_8
+docker build ./AION_8/ModelTraining_XGBClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_8
+docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_8
