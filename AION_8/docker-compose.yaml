@@ -1,0 +1,66 @@
+version: "3.3"
+services:
+  modelmonitoring_aion_8:
+    build: ./ModelMonitoring
+    image: modelmonitoring:aion_8
+    command: python code.py -i https://www.openml.org/data/get_csv/31/dataset_31_credit-g.arff%22
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+  dataingestion_aion_8:
+    build: ./DataIngestion
+    image: dataingestion:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    depends_on:
+      - modelmonitoring_aion_8
+  datatransformation_aion_8:
+    build: ./DataTransformation
+    image: datatransformation:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    depends_on:
+      - dataingestion_aion_8
+  featureengineering_aion_8:
+    build: ./FeatureEngineering
+    image: featureengineering:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    depends_on:
+      - datatransformation_aion_8
+  modeltraining_kneighborsclassifier_mlbased_aion_8:
+    build: ./ModelTraining_KNeighborsClassifier_MLBased
+    image: modeltraining_kneighborsclassifier_mlbased:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    depends_on:
+      - featureengineering_aion_8
+  modeltraining_xgbclassifier_mlbased_aion_8:
+    build: ./ModelTraining_XGBClassifier_MLBased
+    image: modeltraining_xgbclassifier_mlbased:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    depends_on:
+      - modeltraining_kneighborsclassifier_mlbased_aion_8
+  modelregistry_aion_8:
+    build: ./ModelRegistry
+    image: modelregistry:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    depends_on:
+      - modeltraining_xgbclassifier_mlbased_aion_8
+  modelserving_aion_8:
+    build: ./ModelServing
+    image: modelserving:aion_8
+    command: python code.py
+    volumes:
+      - /home/ubuntu/aion_8:/aion
+    ports:
+      - 80:8094
+    depends_on:
+      - modelregistry_aion_8
