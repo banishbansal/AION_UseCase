@@ -36,7 +36,7 @@ jobs:
         docker build ./AION_8/ModelServing -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelserving:AION_8
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelserving:AION_8		
 
-docker build ./AION_8/ModelTraining_KNeighborsClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_8
-docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_8
-docker build ./AION_8/ModelTraining_XGBClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_8
-docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_8
+        docker build ./AION_8/ModelTraining_KNeighborsClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_8
+        docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_8
+        docker build ./AION_8/ModelTraining_XGBClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_8
+        docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_8
