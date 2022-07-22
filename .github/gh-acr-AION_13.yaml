@@ -1,0 +1,41 @@
+name: gh-acr-AION_13
+on: 
+  push:
+    branches: main
+    paths: AION_13/**
+  workflow_dispatch:
+jobs:
+  gh-acr-build-push:
+    runs-on: ubuntu-latest 
+    steps:
+    - name: 'checkout action'
+      uses: actions/checkout@main
+    
+    - name: 'azure login'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: 'build and push image'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build ./AION_13/ModelMonitoring -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelmonitoring:AION_13
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelmonitoring:AION_13
+        docker build ./AION_13/DataIngestion -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/dataingestion:AION_13
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/dataingestion:AION_13		
+        docker build ./AION_13/DataTransformation -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/datatransformation:AION_13
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/datatransformation:AION_13
+        docker build ./AION_13/FeatureEngineering -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/featureengineering:AION_13
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/featureengineering:AION_13
+        docker build ./AION_13/ModelRegistry -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelregistry:AION_13
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelregistry:AION_13		
+        docker build ./AION_13/ModelServing -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelserving:AION_13
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/modelserving:AION_13		
+        docker build ./AION_13/ModelTraining_KNeighborsClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_13
+        docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_kneighborsclassifier_mlbased:AION_13
+        docker build ./AION_13/ModelTraining_XGBClassifier_MLBased -t ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_13
+        docker push ${{{{ secrets.REGISTRY_LOGIN_SERVER }}}}/modeltraining_xgbclassifier_mlbased:AION_13
